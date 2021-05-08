@@ -1,16 +1,18 @@
 //main file for backend 
-// installed packages: 
-// -express 
 
 const Express = require("express");
 const app = Express();
 const mongoose = require("mongoose");
 const port = 3000;
 
-//console.log("hello world");
 
 const importMongoURI = require("./mongo");
 const URI = importMongoURI.returnURI();
+
+//connect to Database 
+mongoose.connect(URI, () => {
+    console.log("connected to database");
+});
 
 
 app.get("/", (req,res) => {
@@ -20,4 +22,4 @@ app.get("/", (req,res) => {
 
 app.listen(port, () => console.log("listening on port " + port));
 
-app.listen(port);
+//app.listen(port);
