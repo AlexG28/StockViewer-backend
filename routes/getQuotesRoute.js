@@ -1,29 +1,22 @@
 const express = require("express");
-const router = express.router();
+const router = express.Router();
 const schema = require('../models/Defaults');
 
 // need one to get back all the categories of stocks (everything)
 
 router.get('/', async (req,res) => {
-    try{
-        const response = await schema.find();
-        res.json(response);
-    } catch {
+    //res.send('we are on posts');
+    try {
+        const posts = await schema.find();
+        res.json(posts);
+    }catch{
         res.json({message: err});
     }
 });
 
+/*
+router.post( '/', async (req,res) => {
 
-// get by category 
-
-
-// need one to update stock quotes 
-
-
-
-
-
-
-
-
+});
+*/
 module.exports = router;
