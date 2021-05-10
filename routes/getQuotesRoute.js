@@ -14,7 +14,7 @@ router.get('/', async (req,res) => {
 });
 
 
-
+// get by category 
 
 
 // need one to update stock quotes 

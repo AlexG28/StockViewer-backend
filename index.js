@@ -14,11 +14,14 @@ mongoose.connect(URI, () => {
     console.log("connected to database");
 });
 
+const getQuotesRoute = require('./routes/getQuotesRoute');
+app.use('/getQuoteRoute', getQuotesRoute);
 
+/*
 app.get("/", (req,res) => {
     res.send("hello world");
 })
-
+*/
 
 app.listen(port, () => console.log("listening on port " + port));
 
