@@ -9,6 +9,11 @@ var someModelSchema = new Schema ({
 
 });
 
-var someModel = mongoose.model('someModel', someModelSchema);
-module.exports = someModel;
+var category = mongoose.model('someModel', someModelSchema);
+/*
+category.find( {StockCategory : StockCategory} , '-_id StockCategory', function(err, category) {
+    console.log(category);
+});
+*/
+module.exports = category;
 

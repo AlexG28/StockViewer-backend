@@ -29,7 +29,8 @@ router.get('/:postId', async (req,res) => {
 router.get('/:StockCategory', async (req, res) => {
     try {
         //const result = await schema.find(req.params.StockCategory);
-        const result = await schema.findOne()
+        //const result = await schema.findOne();
+        const result = await schema.find({ StockCategory: req.body.StockCategory});
         res.send(result);
     }catch (err) {
         res.json({message: err})
