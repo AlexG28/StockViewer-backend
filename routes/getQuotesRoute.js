@@ -2,8 +2,7 @@ const express = require("express");
 const router = express.Router();
 const schema = require('../models/Defaults');
 
-// need one to get back all the categories of stocks (everything)
-
+// get all 
 router.get('/', async (req,res) => {    
     try {
         const posts = await schema.find();
@@ -13,38 +12,40 @@ router.get('/', async (req,res) => {
     }
 });
 
+/*
 // get a post by ID 
 router.get('/:postId', async (req,res) => {
     try{        
         const post = await schema.findById(req.params.postId);
         res.send(post);
     } catch (err){
-        res.json({text:"this is a failure"});
-        //res.json({message: err});
-    }
-});
-
-// FUTURE TODO:
-// need to get cateogires of stocks by their name such as 'bank', 'tech', 'auto' and so on 
-
-
-
-/*
-// adding a stock category for testing purposes 
-router.post('/', async (req,res) => {
-    //console.log(req.body);
-    const post = new schema ({
-        StockCategory: req.body.StockCategory,
-        Stocks: req.body.Stocks
-    });
-
-    try{       
-        const savedPost = await post.save();
-        res.json(savedPost);
-    } catch(err){
-        res.json({message: err});
+        res.json({message: "hahahhahaha"});
     }
 });
 */
 
+
+// need to work on this 
+router.get('/:StockCategory', async (req, res) => {
+    try {
+        //const result = await schema.find(req.params.StockCategory);
+        const result = await schema.findOne()
+        res.send(result);
+    }catch (err) {
+        res.json({message: err})
+    }
+});
+
+/* Useful videos and ideas 
+    https://www.youtube.com/watch?v=fgTGADljAeg
+    https://mongoosejs.com/docs/api.html#model_Model.find
+    https://thecodebarbarian.com/how-find-works-in-mongoose.html
+*/
+
+
 module.exports = router;
+
+
+
+
+
