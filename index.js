@@ -12,10 +12,8 @@ app.use(bodyParser.json());
 
 mongoose.connect (
     process.env.DB_USER,
-    //'mongodb+srv://database1:crazydatabase@maincluster.jnarl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
     () => console.log("Connected to database!")
 );
-
 
 
 const getQuoteRoute = require('./routes/getQuotesRoute');

@@ -12,37 +12,16 @@ router.get('/', async (req,res) => {
     }
 });
 
-/*
-// get a post by ID 
-router.get('/:postId', async (req,res) => {
-    try{        
-        const post = await schema.findById(req.params.postId);
-        res.send(post);
-    } catch (err){
-        res.json({message: "hahahhahaha"});
-    }
-});
-*/
 
-
-// need to work on this 
+// input the stock category in json and receive the right object
 router.get('/:StockCategory', async (req, res) => {
     try {
-        //const result = await schema.find(req.params.StockCategory);
-        //const result = await schema.findOne();
         const result = await schema.find({ StockCategory: req.body.StockCategory});
         res.send(result);
     }catch (err) {
         res.json({message: err})
     }
 });
-
-/* Useful videos and ideas 
-    https://www.youtube.com/watch?v=fgTGADljAeg
-    https://mongoosejs.com/docs/api.html#model_Model.find
-    https://thecodebarbarian.com/how-find-works-in-mongoose.html
-*/
-
 
 module.exports = router;
 
