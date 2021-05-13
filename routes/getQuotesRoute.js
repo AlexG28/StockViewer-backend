@@ -16,7 +16,7 @@ router.get('/', async (req,res) => {
 // input the stock category in json and receive the right object
 router.get('/:StockCategory', async (req, res) => {
     try {
-        const result = await schema.find({ StockCategory: req.body.StockCategory});
+        const result = await schema.find({ StockCategory: req.params.StockCategory});
         res.send(result);
     }catch (err) {
         res.json({message: err})
