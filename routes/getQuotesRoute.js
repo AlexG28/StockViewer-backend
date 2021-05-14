@@ -1,5 +1,5 @@
 const express = require("express");
-const { Schema } = require("mongoose");
+const mongoose = require("mongoose");
 const router = express.Router();
 const schema = require('../models/Defaults');
 
@@ -25,8 +25,11 @@ router.get('/:StockCategory', async (req, res) => {
 });
 
 // add a stock
+
 router.post ('/', async (req,res)=> {
-    const schema1 = new Schema ({
+    console.log(req.body.StockCategory);
+    console.log(req.body.Stocks[0]);
+    const schema1 = new schema ({
         StockCategory: req.body.StockCategory,
         Stocks: req.body.Stocks
     });
