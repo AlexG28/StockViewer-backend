@@ -1,4 +1,5 @@
 const express = require("express");
+const { Schema } = require("mongoose");
 const router = express.Router();
 const schema = require('../models/Defaults');
 
@@ -22,6 +23,21 @@ router.get('/:StockCategory', async (req, res) => {
         res.json({message: err})
     }
 });
+
+// add a stock
+router.post ('/', async (req,res)=> {
+    const schema1 = new Schema ({
+        StockCategory: req.body.StockCategory,
+        Stocks: req.body.Stocks
+    });
+    try {
+        const savedSchema = await schema1.save();
+        res.json(savedSchema);
+    } catch {
+        res.json({message: err});
+    }
+});
+
 
 module.exports = router;
 
