@@ -41,6 +41,26 @@ router.post ('/', async (req,res)=> {
     }
 });
 
+// update the price and daily change of each individual stock 
+
+router.put('/update/:ticker', async (req, res) => {
+    
+
+    const schema2 = schema(
+        { ticker: req.params.ticker}, 
+        {$set: {
+            price: req.body.price,
+            dailyChange: req.body.dailyChange
+        }}
+    );
+    const saved = await schema2.save();
+    res.json(saved);
+
+    
+});
+
+
+
 
 module.exports = router;
 
