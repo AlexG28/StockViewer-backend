@@ -41,26 +41,35 @@ router.post ('/', async (req,res)=> {
     }
 });
 
-// update the price and daily change of each individual stock 
+// instead of updating individual stocks, update all of them at the same time ?????????
 
-router.put('/update/:ticker', async (req, res) => {
-    
+router.put('/update/:category', async (req, res) => {
 
-    const schema2 = schema(
-        { ticker: req.params.ticker}, 
-        {$set: {
-            price: req.body.price,
-            dailyChange: req.body.dailyChange
-        }}
-    );
-    const saved = await schema2.save();
-    res.json(saved);
-
-    
+    try {
+        const filter = {StockCategory: req.params.category};
+        //const update = // using another file, get the json data to update 
+        const update = {
+            Stocks: [{
+                ticker: 'jpm',
+                companyName: 'JP Morgan Chase',
+                price: 666.0,
+                dailyChange: 6.66
+            }, {
+                ticker: 'bac',
+                companyName: 'Bank Of America',
+                price: 777.0,
+                dailyChange: 7.77
+            }]
+        };
+        const update2 = {$set: {update}};
+        let variable = await schema.updateOne(filter, update2);
+        //let variable2 = await schema.update(filter, update2);
+        res.json(update2);
+        //res.json(variable);
+    } catch(err) {
+        res.json({message: err});
+    }
 });
-
-
-
 
 module.exports = router;
 
