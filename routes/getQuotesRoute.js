@@ -41,34 +41,30 @@ router.post ('/', async (req,res)=> {
     }
 });
 
-// instead of updating individual stocks, update all of them at the same time ?????????
+// this works !!!!!!!!
+// for loops save the day 
 
-router.put('/update/:category', async (req, res) => {
-
+router.put ('/update/:Category/:ticker', async (req, res) => {
     try {
-        const filter = {StockCategory: req.params.category};
-        //const update = // using another file, get the json data to update 
-        const update = {
-            Stocks: [{
-                ticker: 'jpm',
-                companyName: 'JP Morgan Chase',
-                price: 666.0,
-                dailyChange: 6.66
-            }, {
-                ticker: 'bac',
-                companyName: 'Bank Of America',
-                price: 777.0,
-                dailyChange: 7.77
-            }]
-        };
-        const update2 = {$set: {update}};
-        let variable = await schema.updateOne(filter, update2);
-        //let variable2 = await schema.update(filter, update2);
-        res.json(update2);
-        //res.json(variable);
-    } catch(err) {
+        const category = await schema.findOne({StockCategory: req.params.Category});
+        
+        // need to update from req.body to using a different function from this backend itself
+        for (var i = 0; i < category.Stocks.length; i++){
+            if (category.Stocks[i].ticker == req.params.ticker){
+                console.log(category.Stocks[i]);
+                category.Stocks[i].price = req.body.price
+                category.Stocks[i].dailyChange = req.body.dailyChange
+            }   
+        }
+        const updated = category.save();
+        res.json(updated);
+        
+    } catch (err){
         res.json({message: err});
     }
+// format example of how to use this 
+// http://localhost:3000/getQuoteRoute/update/Banks/jpm
+
 });
 
 module.exports = router;
