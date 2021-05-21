@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
 const schema = require('../models/Defaults');
+const updateStocks = require('../updateStock');
 
 // get all 
 router.get('/', async (req,res) => {    
@@ -41,9 +42,9 @@ router.post ('/', async (req,res)=> {
     }
 });
 
-// this works !!!!!!!!
-// for loops save the day 
-
+// format example of how to use this 
+// http://localhost:3000/getQuoteRoute/update/Banks/jpm
+// updates individual stock 
 router.put ('/update/:Category/:ticker', async (req, res) => {
     try {
         const category = await schema.findOne({StockCategory: req.params.Category});
@@ -62,11 +63,34 @@ router.put ('/update/:Category/:ticker', async (req, res) => {
     } catch (err){
         res.json({message: err});
     }
-// format example of how to use this 
-// http://localhost:3000/getQuoteRoute/update/Banks/jpm
-
 });
 
+// update all stocks in a category
+/*
+router.put('/update/:Category/all', async(req,res) => {
+    try {
+        const category = await schema.findOne({StockCategory: req.params.Category});
+        var updated;
+        var newInfo;
+        for (var i = 0; i < category.Stocks.length; i++){
+            // newInfo = updateStocks.update('category.Stocks[i].ticker');
+            // category.Stocks[i].price = newInfo.price;
+            // category.Stocks[i].dailyChange = newInfo.dailyChange;
+        }
+        updated = category.save();
+        res.json(updated);
+
+    } catch (err){
+        res.json({message: err});
+    }
+});
+*/
+
+router.put('/update/:Category/all', async(req,res) =>{
+    var output = updateStocks.update(req.params.Category);
+    res.json(output);
+
+});
 module.exports = router;
 
 
