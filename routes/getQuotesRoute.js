@@ -65,6 +65,20 @@ router.put ('/update/:Category/:ticker', async (req, res) => {
     }
 });
 
+router.put('/update/all', async(req,res) =>{
+    try{
+        var ticker = req.body.Ticker;
+        var output = updateStocks(ticker);
+        res.json(output);
+    } catch (err){
+        res.json({message: err});
+    }
+
+});
+
+
+
+
 // update all stocks in a category
 /*
 router.put('/update/:Category/all', async(req,res) => {
@@ -86,14 +100,6 @@ router.put('/update/:Category/all', async(req,res) => {
 });
 */
 
-router.put('/update/:Category/all', async(req,res) =>{
-    var output = updateStocks.update(req.params.Category);
-    res.json(output);
 
-});
 module.exports = router;
-
-
-
-
 
