@@ -65,7 +65,9 @@ router.put ('/update/:Category/:ticker', async (req, res) => {
     }
 });
 
-router.put('/update/all', async(req,res) =>{
+//USED FOR TESTING PURPOSES ONLY 
+// TEST TEST TEST TEST TEST TEST TEST 
+router.put('/updateAll', async(req,res) =>{
     try{
         var ticker = req.body.Ticker;
         var output = updateStocks(ticker);
@@ -80,25 +82,24 @@ router.put('/update/all', async(req,res) =>{
 
 
 // update all stocks in a category
-/*
-router.put('/update/:Category/all', async(req,res) => {
+router.put('/updateAll/:Category', async(req,res) => {
     try {
         const category = await schema.findOne({StockCategory: req.params.Category});
         var updated;
         var newInfo;
         for (var i = 0; i < category.Stocks.length; i++){
-            // newInfo = updateStocks.update('category.Stocks[i].ticker');
-            // category.Stocks[i].price = newInfo.price;
-            // category.Stocks[i].dailyChange = newInfo.dailyChange;
+            newInfo = updateStocks(category.Stocks[i].ticker);
+            category.Stocks[i].price = newInfo.price;
+            category.Stocks[i].dailyChange = newInfo.dailyChange;
         }
         updated = category.save();
-        res.json(updated);
+        res.json("hello there ");
 
     } catch (err){
         res.json({message: err});
     }
 });
-*/
+
 
 
 module.exports = router;
