@@ -14,7 +14,6 @@ router.get('/', async (req,res) => {
     }
 });
 
-
 // input the stock category in json and receive the right object
 router.get('/:StockCategory', async (req, res) => {
     try {
@@ -79,8 +78,6 @@ router.put('/updateAll', async(req,res) =>{
 });
 
 
-
-
 // update all stocks in a category
 router.put('/updateAll/:Category', async(req,res) => {
     try {
@@ -88,7 +85,7 @@ router.put('/updateAll/:Category', async(req,res) => {
         var updated;
         var newInfo;
         for (var i = 0; i < category.Stocks.length; i++){
-            newInfo = updateStocks(category.Stocks[i].ticker);
+            newInfo = await updateStocks(category.Stocks[i].ticker);
             category.Stocks[i].price = newInfo.price;
             category.Stocks[i].dailyChange = newInfo.dailyChange;
         }
