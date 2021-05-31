@@ -4,6 +4,10 @@ const router = express.Router();
 const schema = require('../models/Defaults');
 const updateStocks = require('../updateStock');
 
+//const categories = ["Banks","Healthcare","Auto","Semiconductor", "Tech"]
+const categories = ["Bank", "Healthcare", "Semiconductor"];
+
+
 // get all 
 router.get('/', async (req,res) => {    
     try {
@@ -64,13 +68,22 @@ router.put ('/update/:Category/:ticker', async (req, res) => {
     }
 });
 
-//USED FOR TESTING PURPOSES ONLY 
-// TEST TEST TEST TEST TEST TEST TEST 
-router.put('/updateAll', async(req,res) =>{
+
+router.put('/updateAll', async(req,res) =>{   
     try{
-        var ticker = req.body.Ticker;
-        var output = updateStocks(ticker);
-        res.json(output);
+        for (var j = 0; j < categories.length; j++){
+            const category = await schema.findOne({StockCategory: categories[j]});
+            var updated;
+            var newInfo;
+            for (var i = 0; i < category.Stocks.length; i++){
+                newInfo = await updateStocks(category.Stocks[i].ticker);
+                category.Stocks[i].price = newInfo.price;
+                category.Stocks[i].dailyChange = newInfo.dailyChange;
+            }
+            updated = category.save();
+            console.log(updated);
+        }
+        res.json("everything worked");
     } catch (err){
         res.json({message: err});
     }
