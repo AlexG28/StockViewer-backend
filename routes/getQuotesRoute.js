@@ -5,7 +5,7 @@ const schema = require('../models/Defaults');
 const updateStocks = require('../updateStock');
 
 //const categories = ["Banks","Healthcare","Auto","Semiconductor", "Tech"]
-const categories = ["Bank", "Healthcare", "Semiconductor"];
+const categories = ["Bank", "Healthcare", "Semicondctor"];
 
 
 // get all 
@@ -80,8 +80,8 @@ router.put('/updateAll', async(req,res) =>{
                 category.Stocks[i].price = newInfo.price;
                 category.Stocks[i].dailyChange = newInfo.dailyChange;
             }
-            updated = category.save();
-            console.log(updated);
+            updated = await category.save();
+            //console.log(updated);
         }
         res.json("everything worked");
     } catch (err){
@@ -103,7 +103,7 @@ router.put('/updateAll/:Category', async(req,res) => {
             category.Stocks[i].dailyChange = newInfo.dailyChange;
         }
         updated = category.save();
-        res.json("hello there ");
+        res.json("hello there");
 
     } catch (err){
         res.json({message: err});
