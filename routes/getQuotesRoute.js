@@ -4,8 +4,8 @@ const router = express.Router();
 const schema = require('../models/Defaults');
 const updateStocks = require('../updateStock');
 
-//const categories = ["Banks","Healthcare","Auto","Semiconductor", "Tech"]
-const categories = ["Bank", "Healthcare", "Semicondctor"];
+//const categories = ["Banks","Healthcare","Auto","Semicondctor", "Tech"]
+const categories = ["Bank", "Healthcare", "Semicondctor", "Automotive", "Tech"];
 
 
 // get all 
@@ -90,7 +90,7 @@ router.put('/updateAll', async(req,res) =>{
 
 });
 
-
+/*
 // update all stocks in a category
 router.put('/updateAll/:Category', async(req,res) => {
     try {
@@ -109,7 +109,7 @@ router.put('/updateAll/:Category', async(req,res) => {
         res.json({message: err});
     }
 });
-
+*/
 
 
 module.exports = router;

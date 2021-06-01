@@ -8,7 +8,7 @@ const updatedData = async (ticker) =>  {
     try {
         const fetched = await fetch(api_url);
         const response = await fetched.json();
-        //console.log(response);
+        // if either of these are 0, then toFixed doesn't work
         var price = (response.quote.latestPrice).toFixed(2);
         var dailyChange = (response.quote.change).toFixed(4);
         
