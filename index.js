@@ -3,7 +3,7 @@
 const Express = require("express");
 const app = Express();
 const mongoose = require("mongoose");
-const port = 3000;
+const port = 3001;
 require('dotenv').config();
 const bodyParser = require("body-parser");
 
@@ -21,7 +21,6 @@ mongoose.connect (
     process.env.DB_USER,
     () => console.log("Connected to database!")
 );
-
 
 
 const getQuoteRoute = require('./routes/getQuotesRoute');
