@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
-const schema = require('../models/Defaults');
+const stockCollection = require('../models/Defaults');
 const updateStocks = require('../updateStock');
 
 //const categories = ["Banks","Healthcare","Auto","Semicondctor", "Tech"]
@@ -10,18 +10,24 @@ const categories = ["Bank", "Healthcare", "Semicondctor", "Automotive", "Tech"];
 
 // get all 
 router.get('/', async (req,res) => {    
+    //mongoose.set('debug', true);
+    console.log("hahahaaaa");
+    
     try {
-        const posts = await schema.find();
+        const posts = await stockCollection.find(); // this line doesn't work 
         res.json(posts);
     }catch{
         res.json({message: err});
     }
+    
+    res.end();
 });
+
 
 // input the stock category in json and receive the right object
 router.get('/:StockCategory', async (req, res) => {
     try {
-        const result = await schema.find({ StockCategory: req.params.StockCategory});
+        const result = await stockCollection.find({ StockCategory: req.params.StockCategory});
         res.send(result);
     }catch (err) {
         res.json({message: err})
@@ -33,7 +39,7 @@ router.get('/:StockCategory', async (req, res) => {
 router.post ('/', async (req,res)=> {
     console.log(req.body.StockCategory);
     console.log(req.body.Stocks[0]);
-    const schema1 = new schema ({
+    const schema1 = new stockCollection ({
         StockCategory: req.body.StockCategory,
         Stocks: req.body.Stocks
     });
@@ -50,7 +56,7 @@ router.post ('/', async (req,res)=> {
 // updates individual stock 
 router.put ('/update/:Category/:ticker', async (req, res) => {
     try {
-        const category = await schema.findOne({StockCategory: req.params.Category});
+        const category = await stockCollection.findOne({StockCategory: req.params.Category});
         
         // need to update from req.body to using a different function from this backend itself
         for (var i = 0; i < category.Stocks.length; i++){
@@ -72,7 +78,7 @@ router.put ('/update/:Category/:ticker', async (req, res) => {
 router.put('/updateAll', async(req,res) =>{   
     try{
         for (var j = 0; j < categories.length; j++){
-            const category = await schema.findOne({StockCategory: categories[j]});
+            const category = await stockCollection.findOne({StockCategory: categories[j]});
             var updated;
             var newInfo;
             for (var i = 0; i < category.Stocks.length; i++){
